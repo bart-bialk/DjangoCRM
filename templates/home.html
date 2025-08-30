@@ -1,40 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="col-md-6 offset-md-3">
-        {% if user.is_authenticated %}
-            <h1>Welcome, {{ user.username }}</h1>
-            <br/>
-            <table class="table table-striped-columns table-bordered table-hover">
-              <thead class="table-dark">
-                <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">City</th>
-                  <th scope="col">Zipcode</th>
-                  <th scope="col">Phone</th>
-                </tr>
-              </thead>
-              <tbody>
-                    {% if records %}
-                        {% for record in records %}
-                            <tr>
-                                <td>{{ record.first_name }} {{ record.last_name }}</td>
-                                <td>{{ record.email }}</td>
-                                <td>{{ record.address }}</td>
-                                <td>{{ record.city }}</td>
-                                <td>{{ record.zipcode }}</td>
-                                <td>{{ record.phone_number }}</td>
-                            </tr>
-                        {% endfor %}
-                    {% endif %}
-              </tbody>
-            </table>
+    {% if user.is_authenticated %}
+        <h1>Welcome, {{ user.username }}</h1>
+        <br/>
+        <table class="table table-striped-columns table-bordered table-hover">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Address</th>
+                <th scope="col">City</th>
+                <th scope="col">Zipcode</th>
+                <th scope="col">Phone</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if records %}
+                {% for record in records %}
+                    <tr>
+                        <td><a href="{% url 'record' record.id %}">{{ record.first_name }} {{ record.last_name }}</a>
+                        </td>
+                        <td>{{ record.email }}</td>
+                        <td>{{ record.address }}</td>
+                        <td>{{ record.city }}</td>
+                        <td>{{ record.zipcode }}</td>
+                        <td>{{ record.phone_number }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
 
 
 
-        {% else %}
+    {% else %}
+        <div class="col-md-6 offset-md-3">
             <H1>Login</H1>
             <br/>
             <form method="POST" action="{% url 'home' %}">
@@ -47,6 +48,6 @@
                 </div>
                 <button type="submit" class="btn btn-secondary">Login</button>
             </form>
-    </div>
+        </div>
     {% endif %}
-{%  endblock %}
+{% endblock %}
